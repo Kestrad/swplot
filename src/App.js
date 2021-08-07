@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 
 function App() {
-  const [hasData, setHasData] = useState(false);
+  const [dataState, setDataState] = useState(null);
   const [planetaryData, setPlanetaryData] = useState([]);
   useEffect(() => {
     let data = [];
@@ -25,28 +25,43 @@ function App() {
           return a.name.localeCompare(b.name);
         })
         setPlanetaryData(data);
-        setHasData(true);
-      });
+        setDataState(true);
+      })
+      .catch(() => {
+        setDataState("error");
+      })
   }, []);
 
   const [planetsPage, setPlanetsPage] = useState(1);
   
-  function getPlanetNames(page, size=10) {
+  function getPlanetAttributes(attr, page=1, size=planetaryData.length) {
     let startIndex = (page-1)*10;
-    let names = [];
+    let attrs = [];
     for (let i=startIndex; i<startIndex+size; i++) {
-      names.push(planetaryData[i].name);
+      attrs.push(planetaryData[i][attr]);
     }
-    return names;
+    return attrs;
   }
 
-  function getPlanetPops(page, size=10) {
-    let startIndex = (page-1)*10;
-    let pops = [];
-    for (let i=startIndex; i<startIndex+size; i++) {
-      pops.push(planetaryData[i].population);
+  function renderCharts() {
+    return (
+      <Plot
+          data={
+            [{type: 'bar', x: getPlanetAttributes("name"), y: getPlanetAttributes("population")},]
+          }
+          layout={{title: "Planet Populations"}}
+          className="Population-chart"
+      />
+    )
+  }
+
+  function renderStatus() {
+    if (dataState === null) {
+      return (
+        <span className="Loading-message">Loading...</span>
+      )
     }
-    return pops;
+    return <span className="Loading-message">Something went wrong, please try refreshing!</span>
   }
 
   return (
@@ -55,12 +70,7 @@ function App() {
         <h1>Star Wars Planetary Charts</h1>
       </header>
       <div className="Charts">
-        {hasData ? <Plot
-          data={
-            [{type: 'bar', x: getPlanetNames(planetsPage), y: getPlanetPops(planetsPage)},]
-          }
-          layout={{title: "Planet Populations"}}
-          /> : "Loading..."}
+        {dataState===true ? renderCharts() : renderStatus()}
       </div>
     </div>
   );

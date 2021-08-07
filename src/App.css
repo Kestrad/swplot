@@ -26,3 +26,8 @@
 .App-link {
   color: #61dafb;
 }
+
+.Loading-message {
+  display: inline-block;
+  margin-top: 3vh;
+}
