@@ -56,6 +56,15 @@ table, th, td {
   font-size: large;
 }
 
+.Table-instructions {
+  font-size: small;
+  margin-bottom: .5vh;
+}
+
+th {
+  cursor: default;
+}
+
 td {
   font-size: small;
 }

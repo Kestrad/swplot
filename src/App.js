@@ -42,6 +42,8 @@ function App() {
                     "climate", 
                     "surface_water"];
   const [attributes, setAttributes] = useState(attrList);
+  const [chartAttribute, setChartAttribute] = useState("population");
+  const [chartTitle, setChartTitle] = useState("Population");
   
   function getPlanetAttributes(attr, page=1, size=planetaryData.length) {
     let startIndex = (page-1)*10;
@@ -49,6 +51,7 @@ function App() {
     for (let i=startIndex; i<startIndex+size; i++) {
       attrs.push(planetaryData[i][attr]);
     }
+    console.log(attrs);
     return attrs;
   }
 
@@ -57,17 +60,18 @@ function App() {
       <div className="Charts">
         <Plot
             data={
-              [{type: 'bar', x: getPlanetAttributes("name"), y: getPlanetAttributes("population")},]
+              [{type: 'bar', x: getPlanetAttributes("name"), y: getPlanetAttributes(chartAttribute)},]
             }
-            layout={{title: "Planet Populations", height: "100%"}}
+            layout={{title: `${chartTitle} of Star Wars Planets`, height: "100%"}}
             className="Population-chart"
         />
         <PlanetTable
             attributes={attributes}
-            getAttributes={getPlanetAttributes}
             planetaryData={planetaryData}
             page={planetsPage}
             changePage={setPlanetsPage}
+            changeChart={setChartAttribute}
+            changeChartTitle={setChartTitle}
         />
       </div>
     )

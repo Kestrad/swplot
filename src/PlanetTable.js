@@ -12,14 +12,25 @@ function PlanetTable(props) {
             )
         })
     }
+    function updateTitle(e) {
+        props.changeChartTitle(e.target.textContent);
+    }
     return (
         <div className="Table">
           <span className="Table-title">Planet Attributes</span>
+          <div className="Table-instructions">Click a column header to chart that column!
+          (Yes, I know climate and name don't make sense)
+          </div>
           <table className="Attributes-table">
             <tr>
-              {props.attributes.map((item) => <th>{item.split("_")
-                                                .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
-                                                .join(" ")}</th>)}
+              {props.attributes.map((item) => <th onClick={(e)=>{
+                                                    props.changeChart(item);
+                                                    updateTitle(e);
+                                                }}>
+                  {item.split("_")
+                       .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
+                       .join(" ")}
+                </th>)}
             </tr>
             {makeRows(10)}
           </table>
