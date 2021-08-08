@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
+import PlanetTable from './PlanetTable';
 
 function App() {
   const [dataState, setDataState] = useState(null);
@@ -61,23 +62,12 @@ function App() {
             layout={{title: "Planet Populations"}}
             className="Population-chart"
         />
-        <div className="Table">
-          <span className="Table-title">Planet Attributes</span>
-          <table className="Attributes-table">
-            <tr>
-              {attributes.map((item) => <th>{item.split("_")
-                                                .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
-                                                .join(" ")}</th>)}
-            </tr>
-            {planetaryData.map((planet) => {
-              return (
-                <tr>
-                  {attributes.map((property) => <td>{planet[property]}</td>)}
-                </tr>
-              )
-            })}
-          </table>
-        </div>
+        <PlanetTable
+            attributes={attributes}
+            attributesFunc={getPlanetAttributes}
+            planetaryData={planetaryData}
+            page={planetsPage}
+        />
       </div>
     )
   }
