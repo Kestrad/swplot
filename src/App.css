@@ -63,3 +63,7 @@ td {
 table {
   border-collapse: collapse;
 }
+
+.Scroll button {
+  margin: 2vh;
+}

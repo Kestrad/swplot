@@ -59,14 +59,15 @@ function App() {
             data={
               [{type: 'bar', x: getPlanetAttributes("name"), y: getPlanetAttributes("population")},]
             }
-            layout={{title: "Planet Populations"}}
+            layout={{title: "Planet Populations", height: "100%"}}
             className="Population-chart"
         />
         <PlanetTable
             attributes={attributes}
-            attributesFunc={getPlanetAttributes}
+            getAttributes={getPlanetAttributes}
             planetaryData={planetaryData}
             page={planetsPage}
+            changePage={setPlanetsPage}
         />
       </div>
     )
