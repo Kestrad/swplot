@@ -27,7 +27,39 @@
   color: #61dafb;
 }
 
-.Loading-message {
+span {
   display: inline-block;
+}
+
+.Loading-message {
   margin-top: 3vh;
+}
+
+.Charts {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+@media screen and (max-width:1300px) {
+  .Charts { flex-wrap: wrap;  }
+  .item:first-child { flex-basis: 100%; }
+}
+
+table, th, td {
+  border: 1px solid #282c34;
+}
+
+.Table-title {
+  margin-top: 3vh;
+  margin-bottom: 1vh;
+  font-size: large;
+}
+
+td {
+  font-size: small;
+}
+
+table {
+  border-collapse: collapse;
 }

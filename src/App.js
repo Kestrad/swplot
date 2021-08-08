@@ -33,6 +33,14 @@ function App() {
   }, []);
 
   const [planetsPage, setPlanetsPage] = useState(1);
+  const attrList = ["name",
+                    "population", 
+                    "rotation_period", 
+                    "orbital_period", 
+                    "diameter", 
+                    "climate", 
+                    "surface_water"];
+  const [attributes, setAttributes] = useState(attrList);
   
   function getPlanetAttributes(attr, page=1, size=planetaryData.length) {
     let startIndex = (page-1)*10;
@@ -45,13 +53,32 @@ function App() {
 
   function renderCharts() {
     return (
-      <Plot
-          data={
-            [{type: 'bar', x: getPlanetAttributes("name"), y: getPlanetAttributes("population")},]
-          }
-          layout={{title: "Planet Populations"}}
-          className="Population-chart"
-      />
+      <div className="Charts">
+        <Plot
+            data={
+              [{type: 'bar', x: getPlanetAttributes("name"), y: getPlanetAttributes("population")},]
+            }
+            layout={{title: "Planet Populations"}}
+            className="Population-chart"
+        />
+        <div className="Table">
+          <span className="Table-title">Planet Attributes</span>
+          <table className="Attributes-table">
+            <tr>
+              {attributes.map((item) => <th>{item.split("_")
+                                                .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
+                                                .join(" ")}</th>)}
+            </tr>
+            {planetaryData.map((planet) => {
+              return (
+                <tr>
+                  {attributes.map((property) => <td>{planet[property]}</td>)}
+                </tr>
+              )
+            })}
+          </table>
+        </div>
+      </div>
     )
   }
 
@@ -69,7 +96,7 @@ function App() {
       <header className="App-header">
         <h1>Star Wars Planetary Charts</h1>
       </header>
-      <div className="Charts">
+      <div className="Content">
         {dataState===true ? renderCharts() : renderStatus()}
       </div>
     </div>
