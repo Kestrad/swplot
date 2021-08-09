@@ -20,7 +20,7 @@ function App() {
           }
         })
     }
-    grabPlanets(`https://swapi.dev/api/planets`)
+    grabPlanets(`https://swapi.dev/api/planets/`)
       .then(() => {
         data = data.sort((a, b) => {
           return a.name.localeCompare(b.name);
@@ -28,7 +28,7 @@ function App() {
         setPlanetaryData(data);
         setDataState(true);
       })
-      .catch(() => {
+      .catch((e) => {
         setDataState("error");
       })
   }, []);

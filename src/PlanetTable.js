@@ -35,11 +35,13 @@ function PlanetTable(props) {
             {makeRows(10)}
           </table>
           <div className="Scroll">
-              <button onClick={()=>props.changePage(props.page-1)} 
+              <button className="Prev-ten"
+                      onClick={()=>props.changePage(props.page-1)} 
                       disabled={props.page===1}>
                           Previous 10 planets
               </button>
-              <button onClick={()=>props.changePage(props.page+1)}
+              <button className="Next-ten"
+                      onClick={()=>props.changePage(props.page+1)}
                       disabled={props.page===Math.ceil(props.planetaryData.length/10)}>
                           Next 10 planets
               </button>
